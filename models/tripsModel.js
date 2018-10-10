@@ -61,8 +61,8 @@ let Trips = {
                     let trip_user_mapping = mongo.collection('trip_user_mapping ');
                     async.parallel([
                         function (callback) {
-                            trip_user_mapping.find({ 'user_id': ObjectId(req.body.userid), 'trip_id': req.body.tripid }).toArray(function (err, result) {
-                                callback(result);
+                            trip_user_mapping.find({ 'user_id': ObjectId(req.body.userid), 'trip_id': req.body.tripid }).toArray(callback,function (err, result) {
+                                callback(err,result);
                             });
                         }
                     ], function (err, results) {
@@ -71,11 +71,11 @@ let Trips = {
                                 if (err) {
                                     res.send(cons.failed(err));
                                 } else {
-                                    res.send(con.success({ "msg": "Member added sucessfully" }));
+                                    res.send(cons.success({ "msg": "Member added sucessfully" }));
                                 }
                             })
                         } else {
-                            res.send(con.success({ "msg": "Member already created" }));
+                            res.send(cons.success({ "msg": "Member already created" }));
                         }
                     });
                 }
